@@ -1,8 +1,3 @@
----
-
-### **README.md**
-
-````markdown
 # Step 02 — Page Extract (OWASP GenAI)
 
 ## 📌 Overview
