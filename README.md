@@ -1,11 +1,3 @@
-Got it ✅
-We’ll keep **README.md** and **THREAT\_MODEL.md** as separate files so your repo stays clean and organized.
-
-Here’s what I’ll give you now:
-
-1. **README.md** → Setup, usage, and example output
-2. **THREAT\_MODEL.md** → Detailed OWASP-style threat model table
-
 ---
 
 ### **README.md**
@@ -103,4 +95,4 @@ The browser will:
 
 ## 🔐 Security Documentation
 
-A detailed **threat model** for this step is available in [THREAT\_MODEL.md](./step02_article_ectract-ThreatModel), following the OWASP Agentic AI Threat Taxonomy (TIDs).
+A detailed **threat model** for this step is available in [THREAT\_MODEL.md](./step02_article_ectract-ThreatModel.md), following the OWASP Agentic AI Threat Taxonomy (TIDs).
