@@ -1,65 +1,106 @@
-# Notte Agent Example
+Got it ✅
+We’ll keep **README.md** and **THREAT\_MODEL.md** as separate files so your repo stays clean and organized.
 
-This is a simple example of using the Notte agent to automate web browsing tasks.
+Here’s what I’ll give you now:
 
-## Setup
+1. **README.md** → Setup, usage, and example output
+2. **THREAT\_MODEL.md** → Detailed OWASP-style threat model table
 
-1. **Install dependencies** (if not already done):
-   ```bash
-   pip install notte
-   ```
+---
 
-2. **For basic browser automation (no API key needed)**:
-   ```bash
-   python run_agent_simple.py
-   ```
+### **README.md**
 
-3. **For advanced features (requires OpenAI API key)**:
-   - Go to https://platform.openai.com/api-keys
-   - Create a new API key
-   - Set your API key:
-     ```bash
-     # Temporary (for this session only)
-     export OPENAI_API_KEY="your-api-key-here"
-     
-     # Permanent (add to your shell profile)
-     echo 'export OPENAI_API_KEY="your-api-key-here"' >> ~/.zshrc
-     source ~/.zshrc
-     ```
-   - Run the setup check: `python setup.py`
-   - Run the full agent: `python run_agent.py`
+````markdown
+# Step 02 — Page Extract (OWASP GenAI)
 
-## Usage
+## 📌 Overview
+This program uses a **Notte browser agent** to visit [https://genai.owasp.org](https://genai.owasp.org) and extract structured metadata:
 
-**Simple mode (no API key required)**:
+- `title` — Page title
+- `intro` — One-sentence summary of the page
+- `key_links` — Absolute URLs for:
+  - `resources`
+  - `initiatives`
+  - `blog`
+  - `events`
+
+### Key Constraints
+- Navigation restricted to `genai.owasp.org`
+- No form submissions or file downloads
+- Maximum 5 agent steps per run
+- JSON schema is strictly defined in the prompt
+- Read-only navigation (no tool execution enabled)
+
+---
+
+## ⚙️ Setup
+
+### 1. Prerequisites
+- Python **3.11+**
+- [Notte](https://github.com/nottelabs/notte) installed
+- Virtual environment configured
+
+### 2. Installation
 ```bash
-python run_agent_simple.py
+# Create and activate virtual environment
+python3.11 -m venv .venv
+source .venv/bin/activate
+
+# Install dependencies
+pip install notte python-dotenv patchright
+
+# Install Chromium for Playwright/Notte
+patchright install --with-deps chromium
+````
+
+### 3. Environment Variables
+
+Create a `.env` file in the project root:
+
+```env
+OPENAI_API_KEY=sk-...
+NOTTE_MODEL=openai/gpt-4o-mini
 ```
 
-**Full mode (requires OpenAI API key)**:
+> **Security Note:**
+> Do not commit `.env` to version control.
+> Keep your API keys secret and rotate them if compromised.
+
+---
+
+## ▶️ Running the Agent
+
 ```bash
-python run_agent.py
+source .venv/bin/activate
+python step02_page_extract.py
 ```
 
-## What it does
+The browser will:
 
-The agent will:
-1. Open a browser window
-2. Navigate to https://example.com
-3. Extract the page title and count the number of links
-4. Return the results as JSON
+1. Open `https://genai.owasp.org`
+2. Extract `title`, `intro`, and `key_links`
+3. Print the JSON output to the console
+4. Wait for you to press **Enter** before closing
 
-## Troubleshooting
+---
 
-### "Invalid API key" error
-- Make sure your API key is correct
-- Check that the environment variable is set: `echo $OPENAI_API_KEY`
-- Get a new key from https://platform.openai.com/api-keys
+## 📄 Example Output
 
-### "No module named 'notte'" error
-- Activate your virtual environment: `source .venv/bin/activate`
-- Install notte: `pip install notte`
+```json
+{
+  "title": "Home - OWASP Gen AI Security Project",
+  "intro": "The OWASP GenAI Security Project aims to provide guidance and resources for understanding and mitigating security concerns related to Generative AI applications.",
+  "key_links": {
+    "resources": "https://genai.owasp.org/resources/",
+    "initiatives": "https://genai.owasp.org/initiatives/",
+    "blog": "https://genai.owasp.org/blog/",
+    "events": "https://genai.owasp.org/events/"
+  }
+}
+```
 
-### Browser issues
-- The agent runs in non-headless mode by default so you can see what's happening
-- Make sure you have a modern browser installed (Chrome/Chromium recommended)
+---
+
+## 🔐 Security Documentation
+
+A detailed **threat model** for this step is available in [THREAT\_MODEL.md](./step02_article_ectract-ThreatModel), following the OWASP Agentic AI Threat Taxonomy (TIDs).
